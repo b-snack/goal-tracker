@@ -54,5 +54,14 @@
         "is_repeating": true,
         "repeat_interval": 1,
         "category": "school"
+    },
+    {
+        "text": "sdofij",
+        "priority": "!",
+        "created_at": "2025-10-12 13:42:30",
+        "completed_at": "2025-10-13 10:48:52",
+        "due_date": "2025-10-13",
+        "is_repeating": true,
+        "repeat_interval": 1
     }
 ]

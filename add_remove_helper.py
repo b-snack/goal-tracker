@@ -159,3 +159,107 @@ def clear_goals():
         main.goals = []
         save_goals()
         print("All your goals have been cleared! ")
+
+def edit_goal():
+    import main
+    from view_goals_helper import view_goals
+
+    view_goals(show_prompt=False)
+
+    if not main.goals:
+        return
+
+    try:
+        goal_num = input("Which goal would you like to edit?")
+        if 1 <= num <= len(main.goals):
+            goal = main.goals[goal_num-1]
+
+            print(f"\nEditing: {goal['text']}")
+            print("\nWhat do you want to edit?")
+            print("1. Goal text")
+            print("2. Priority")
+            print("3. Due date")
+            print("4. Category")
+            print("5. Repeat settings")
+            print("6. Cancel")
+
+            choice = input("\nChoose option (1-6): ").strip()
+
+            if choice == '1':
+                new_text = input(f"Current: {goal['text']} \nNew text (or press enter to keep): ").strip()
+                if new_text:
+                    goal['text'] = new_text
+                    print("Test updated!")
+            
+            elif choice == '2':
+                new_priority = input(f"Current: {goal.get('priority', 'N/A')}\nNew priority (!!!, !! or !): ").strip()
+                while new_priority not in ["!!!", "!!", "!"]:
+                    new_priority = input("Invalid. Please enter !!!, !! or !: ").strip()
+                goal['priority'] = new_priority
+                print("Priority updated!")
+            
+            elif choice == '3':
+                change = input(f"Current due date: {goal.get('due_date', 'None')}\nChange due date? (y/n): ").strip().lower()
+                if change == 'y':
+                    days_input = input("How many days from now? (leave blank to remove due date): ").strip()
+                    if not days_input:
+                        goal = ['due_date'] = None
+                        print("Due date removed")
+                    else:
+                        try:
+                            days = int(days_input)
+                            if days < 0:
+                                print("Invalid number")
+                            else:
+                                due_date_obj = datetime.datetime.now() + datetime.timedelta(days=days)
+                                goal['due_date'] = due_date_obj.strftime("%Y-%m-%d")
+                                print("Due date updated!")                            
+                        except ValueError:
+                            print("Invalid input")
+
+            elif choice == '4':
+                from category_helper import create_category
+                print(f"Current category: {goal.get('category', 'None')}")
+                new_category = create_category()
+                goal['category'] = new_category
+                print("Category updated!")
+            
+            elif choice == '5':
+                current_repeat = "Yes" if goal.get('is_repeating') else "No"
+                print(f"Current: Repeating = {current_repeat}, Interval = {goal.get('repeat_interval', 'N/A')} days")
+
+                change_repeat = input("Change repeat settings? (y/n): ").strip().lower()
+                if change_repeat == 'y':
+                    is_repeat = input("Should this goal repeat? (y/n): ").strip().lower()
+                    if is_repeat == 'y':
+                        interval = input("How often? (# of days): ").strip()
+                        try:
+                            days = int(interval)
+                            if days > 0:
+                                goal['is_repeating'] = True
+                                goal['repeat_interval'] = days
+                                print("Repeat settings updated!")
+                            else:
+                                print("Invalid number.")
+                        except ValueError:
+                            print("Invalid input.")
+                    else:
+                        goal['is_repeating'] = False
+                        goal['repeat_interval'] = None
+                        print("Repeat removed")
+            elif choice == '6':
+                print("Edit cancelled")
+                return
+            
+            else:
+                print("Invalid choice.")
+                return
+            
+            save_goals()
+            print("\nGoal saved!")
+
+        else:print(f"Invalid number. Please choose between 1 and {len(main.goals)}")
+
+    except ValueError:
+        print("Enter a valid number")
+

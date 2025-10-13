@@ -8,9 +8,8 @@ Features:
 - finish goals
 
 Future intended features (ranked by difficulty: kinda):
-- edit goals
-- categorization --> e.g. personal, school, health, etc..; tags; urgency/importance (kinda similar to the reminders app --> !, !!, !!!, etc. (maybe more efficent way?) )
 - migrate from text-based to GUI-based application 
+- streak
 - colour coding for priority levels
 - track success rate of goals -> using graphs or stats or etc.
 - proof that you actually did it? (unrealistic perhaps but could work --> e,g, upload a photo & something analyzes it to confirm that ur not bsing it)
@@ -21,7 +20,7 @@ Fri Oct 10, 2025:
 Added:
 - Add & save goals to a file
 - view goals 
-- finish goals
+- finish goals 
 
 Sat Oct 11, 2025:
 - added priority + timestamps to goals
@@ -32,6 +31,10 @@ Sat Oct 12, 2025:
 - due dates 
 - repeating goals (only every n days tho, not very customizable)
 
+Mon, Oct 14, 2025:
+- View goals now sorted by priority & categorizatrion works
+- Edit goals function added
+Later/tomorrow: probably add a stats function and start developing GUI version
 """
 
 
@@ -58,11 +61,12 @@ def main():
         print("3. Finish Goal")
         print("4. View Finished Goals")
         print("5. Clear All")
-        print("6. Exit")
+        print("6. View Goals by Categories")
+        print("7. Exit")
         print("")
         print("=" * 20)
 
-        choice = input("\nChoose an option (1-6): ").strip()
+        choice = input("\nChoose an option (1-7): ").strip()
         print("")
 
         if choice == '1':
@@ -81,7 +85,7 @@ def main():
             print("Exiting program")
             running = False
         else:
-            print("Invalid choice. Please select a number between 1 and 6.")
+            print("Invalid choice. Please select a number between 1 and 7.")
 
 if __name__ == "__main__":
     main()
