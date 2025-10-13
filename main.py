@@ -43,7 +43,7 @@ import os
 import time
 import json
 from save_load_helper import save_goals, load_goals
-from add_remove_helper import add_goal, finished_goal, clear_goals
+from add_remove_helper import add_goal, finished_goal, clear_goals, edit_goal
 from view_goals_helper import view_finished_goals, view_goals, view_by_category
 
 goals = []
@@ -57,31 +57,34 @@ def main():
         print("\n=== Goal Tracker ===")
         print("")
         print("1. Add Goal")
-        print("2. View Goals")
-        print("3. Finish Goal")
-        print("4. View Finished Goals")
-        print("5. Clear All")
-        print("6. View Goals by Categories")
-        print("7. Exit")
+        print("2. Edit Goal")
+        print("3. View Goals")
+        print("4. Finish Goal")
+        print("5. View Finished Goals")
+        print("6. Clear All")
+        print("7. View Goals by Categories")
+        print("8. Exit")
         print("")
         print("=" * 20)
 
-        choice = input("\nChoose an option (1-7): ").strip()
+        choice = input("\nChoose an option (1-8): ").strip()
         print("")
 
         if choice == '1':
             add_goal()
         elif choice == '2':
-            view_goals()
+            edit_goal()
         elif choice == '3':
-            finished_goal()
+            view_goals()
         elif choice == '4':
-            view_finished_goals()
+            finished_goal()
         elif choice == '5':
-            clear_goals()
+            view_finished_goals()
         elif choice == '6':
-            view_by_category()
+            clear_goals()
         elif choice == '7':
+            view_by_category()
+        elif choice == '8':
             print("Exiting program")
             running = False
         else:

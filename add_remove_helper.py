@@ -203,7 +203,7 @@ def edit_goal():
                 if change == 'y':
                     days_input = input("How many days from now? (leave blank to remove due date): ").strip()
                     if not days_input:
-                        goal = ['due_date'] = None
+                        goal['due_date'] = None
                         print("Due date removed")
                     else:
                         try:
