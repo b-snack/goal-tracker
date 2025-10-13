@@ -1,6 +1,7 @@
 import time
 import datetime
 import json
+from collections import Counter
 
 def get_priority_value(goal):
     priority_order = {"!!!": 1, "!!": 2, "!": 3}
@@ -125,4 +126,76 @@ def view_by_category():
                     print(f"   Due: {goal['due_date']}")
                 if goal.get('is_repeating'):
                     print(f"   Repeats: Every {goal.get('repeat_interval', 'N/A')} day(s)")
+    input("\nPress enter to return to menu")
+
+def view_stats():
+    import main
+
+    if not main.goals:
+        print("No goals yet! ")
+        return
+
+    with open("finished.json", "r") as f:
+        finished_goals = json.load(f)
+    
+    active_total = len(main.goals)
+    completed_total = len(finished_goals)
+    all_total_time = active_total + completed_total
+
+    priority_list = [g.get('priority') for g in main.goals]
+    priority_counts = Counter(priority_list)
+
+    high_priority = priority_counts.get('!!!', 0)
+    medium_priority = priority_counts.get('!!', 0)
+    low_priority = priority_counts.get('!', 0)
+
+    today = datetime.datetime.now().date()
+    overdue_count = 0
+    for goal in main.goals:
+        if goal.get('due_date'):
+            due_date = datetime.datetime.strptime(goal['due_date'], "%Y-%m-%d").date()
+            if due_date < today:
+                overdue_count +=1
+
+    categories = {}
+    for goal in main.goals:
+        cat = goal.get('category', 'Uncategorized')
+        categories[cat] = categories.get(cat, 0) + 1
+
+    most_common_category = max(categories, key=categories.get) if categories else "None"
+
+    repeating_count = len([g for g in main.goals if g.get('is_repeating')])
+
+    completion_rate = 0
+    if all_total_time> 0:
+        completion_rate = (completed_total / all_total_time) * 100
+    
+    print("\n" + "=" * 40)
+    print("YOUR GOAL STATISTICS")
+    print("=" * 40)
+    
+    print(f"\nActive Goals: {active_total}")
+    print(f"Completed Goals: {completed_total}")
+    print(f"All-Time Total: {all_total_time}")
+    
+    if all_total_time > 0:
+        print(f"Completion Rate: {completion_rate:.1f}%")
+    
+    print(f"\nOverdue Goals: {overdue_count}")
+    print(f"Repeating Goals: {repeating_count}")
+    
+    print(f"\nHigh Priority (!!!): {high_priority}")
+    print(f"Medium Priority (!!): {medium_priority}")
+    print(f"Low Priority (!): {low_priority}")
+    
+    print(f"\nMost Common Category: {most_common_category}")
+    
+    if categories:
+        print("\nGoals by Category:")
+        for cat, count in sorted(categories.items(), key=lambda x: x[1], reverse=True):
+            print(f"   {cat}: {count}")
+    
+    print("\n" + "=" * 40)
+    
+    time.sleep(0.5)
     input("\nPress enter to return to menu")

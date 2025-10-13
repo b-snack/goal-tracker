@@ -171,7 +171,7 @@ def edit_goal():
 
     try:
         goal_num = input("Which goal would you like to edit?")
-        if 1 <= num <= len(main.goals):
+        if 1 <= goal_num <= len(main.goals):
             goal = main.goals[goal_num-1]
 
             print(f"\nEditing: {goal['text']}")

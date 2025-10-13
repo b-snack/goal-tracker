@@ -35,6 +35,7 @@ Mon, Oct 14, 2025:
 - View goals now sorted by priority & categorizatrion works
 - Edit goals function added
 Later/tomorrow: probably add a stats function and start developing GUI version
+
 """
 
 
@@ -44,7 +45,7 @@ import time
 import json
 from save_load_helper import save_goals, load_goals
 from add_remove_helper import add_goal, finished_goal, clear_goals, edit_goal
-from view_goals_helper import view_finished_goals, view_goals, view_by_category
+from view_goals_helper import view_finished_goals, view_goals, view_by_category, view_stats
 
 goals = []
 
@@ -63,11 +64,12 @@ def main():
         print("5. View Finished Goals")
         print("6. Clear All")
         print("7. View Goals by Categories")
-        print("8. Exit")
+        print("8. View Stats")
+        print("9. Exit")
         print("")
         print("=" * 20)
 
-        choice = input("\nChoose an option (1-8): ").strip()
+        choice = input("\nChoose an option (1-9): ").strip()
         print("")
 
         if choice == '1':
@@ -85,10 +87,12 @@ def main():
         elif choice == '7':
             view_by_category()
         elif choice == '8':
+            view_stats()
+        elif choice == '9':
             print("Exiting program")
             running = False
         else:
-            print("Invalid choice. Please select a number between 1 and 7.")
+            print("Invalid choice. Please select a number between 1 and 9.")
 
 if __name__ == "__main__":
     main()
