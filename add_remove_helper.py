@@ -5,6 +5,7 @@ Add goals, finish goals, and clear goals.
 from view_goals_helper import view_goals, view_finished_goals
 from save_load_helper import save_goals, load_goals
 from category_helper import create_category
+from config import get_data_path
 import datetime
 import json
 
@@ -107,14 +108,14 @@ def finished_goal():
 
                     finished_goals = []
                     try:
-                        with open("finished.json", "r") as f:
+                        with open(get_data_path("finished.json"), "r") as f:
                             finished_goals = json.load(f)
                     except (FileNotFoundError, json.JSONDecodeError):
                         finished_goals = []
                     
                     finished_goals.append(goal)
 
-                    with open("finished.json", "w") as f:
+                    with open(get_data_path("finished.json"), "w") as f:
                         json.dump(finished_goals, f, indent=4)
                     
                     if goal.get('is_repeating'):
@@ -262,4 +263,4 @@ def edit_goal():
 
     except ValueError:
         print("Enter a valid number")
-
+        

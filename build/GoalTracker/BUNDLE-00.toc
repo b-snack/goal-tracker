@@ -1,0 +1,3 @@
+([('GoalTracker',
+   '/Users/sebastianwu/Documents/projects/moonshot/goal-tracker/dist/GoalTracker',
+   'EXECUTABLE')],)
